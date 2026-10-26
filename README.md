@@ -1,119 +1,129 @@
-# Full Stack FastAPI, React, MongoDB (FARM) Base Project Generator
+# Enterprise AI Knowledge Assistant
 
-Show your love for this project by starring our repo :star2:, so we can continue to innovate :slightly_smiling_face:
+### AI-Powered Document Search & Retrieval-Augmented Generation (RAG)
 
-Accelerate your next web development project with this FastAPI/React/MongoDB base project generator.
+A full-stack AI knowledge management application designed to help users search, understand, and retrieve information from large collections of documents using natural language.
 
-This project is for developers looking to build and maintain full-feature progressive web applications using Python on the backend / Typescript on the frontend, and want the complex-but-routine aspects of auth 'n auth, and component and deployment configuration, taken care of, including interactive API documentation. 
+The project demonstrates how Retrieval-Augmented Generation (RAG), large language models, semantic search, and modern web technologies can work together to simplify enterprise knowledge discovery.
 
-This is an **experimental** fork of [Sebastián Ramírez's](https://github.com/tiangolo) [Full Stack FastAPI and PostgreSQL Base Project Generator](https://github.com/tiangolo/full-stack-fastapi-postgresql) and [Whythawk's](https://github.com/whythawk) [Full Stack FastAPI and PostgreSQL Base Project Generator](https://github.com/whythawk/full-stack-fastapi-postgresql). FastAPI is updated to version 0.103.2, MongoDB Motor 3.4, ODMantic ODM 1.0.0, and the frontend to React.
+> **Portfolio Project:** This repository represents an independent demonstration of enterprise AI knowledge-assistant concepts. It does not contain proprietary code, documents, or infrastructure from any client or employer.
 
-![Landing page](img/landing.png)
+## Overview
 
-## Index
+Traditional enterprise search often requires employees to navigate multiple documents, internal portals, and knowledge bases to find relevant information.
 
-- [Requirements](#requirements)
-- [QuickStart](#quickstart)
-- [Screenshots](#screenshots)
-- [Key features](#key-features)
-- [How to use it](#how-to-use-it)
-  - [Building a generated app](./docs/getting-started.md)
-  - [Development and installation](./docs/development-guide.md)
-  - [Deployment for production](./docs/deployment-guide.md)
-  - [Authentication and magic tokens](./docs/authentication-guide.md)
-  - [Websockets for interactive communication](./docs/websocket-guide.md)
-- [More details](#more-details)
-- [Help needed](#help-needed)
-- [Release notes](#release-notes)
-- [License](#license)
+This application explores a more efficient approach by combining document retrieval with AI-generated responses grounded in relevant source material.
 
+### Key Capabilities
 
-## Requirements
+- **AI-Powered Question Answering:** Ask natural-language questions about uploaded documents
+- **Retrieval-Augmented Generation:** Retrieve relevant document passages before generating responses
+- **Semantic Search:** Find information based on meaning rather than exact keyword matches
+- **Document Processing:** Extract, split, and prepare document content for indexing
+- **Source References:** Associate generated responses with supporting document passages
+- **Asynchronous Processing:** Support background document-processing workflows
+- **Modern Web Interface:** Provide an intuitive experience for document search and knowledge discovery
 
-Please make sure you have these installed before proceeding!
-* [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-* [Python 3.11+](https://www.python.org/downloads/)
-* [Cookiecutter](https://cookiecutter.readthedocs.io/en/stable/) -- The Python Cookiecutter library.
-* [Hatch](https://hatch.pypa.io/latest/)
-* [Node.js](https://nodejs.org/en)
-* [MongoDB Compass](https://www.mongodb.com/products/tools/compass) -- To help visualize local/remote database easily.
+## Technology Stack
 
-## QuickStart
+| Category | Technologies |
+|---|---|
+| Frontend | React, TypeScript |
+| Backend | Python, FastAPI |
+| AI / LLM | Azure OpenAI, LangChain |
+| AI Architecture | RAG, Embeddings, Semantic Search |
+| Database | PostgreSQL |
+| Caching | Redis |
+| Background Processing | Celery |
+| Infrastructure | Docker |
+| Cloud & DevOps | Azure, CI/CD |
 
-> **NOTE** This will generate a local application that is not yet production-ready. Please go through all of the README information linked before creating a version to deploy to a production host
+*The technologies above describe the intended reference architecture. Confirm which components are implemented in this repository.*
 
-For those that want to dive in and play around with the generated code, here's a quick start guide on how to do it. It is advised, though, once you have run through generating this app the first time, that you circle back and check out the more fleshed out [Building a generated app](./docs/getting-started.md) section. 
+## System Architecture
 
-```
-// Make sure cookiecutter and python are installed on the device
-// This will generate a full-stack app in the directory ./example
-cookiecutter https://github.com/mongodb-labs/full-stack-fastapi-mongodb --no-input project_name="example"
+The application follows a modular architecture separating the frontend, API layer, document-processing pipeline, retrieval system, and LLM integration.
 
-// Move into that directory.
-cd example
+**Document Processing Flow**
 
-// Make sure that you've opened the Docker Desktop app before this step.
-// build
-docker compose build --no-cache
+1. A user uploads a document
+2. The backend extracts and validates its content
+3. The content is divided into smaller searchable chunks
+4. An embedding model generates vector representations
+5. The resulting vectors and metadata are stored in a searchable index
 
-// start the container in the background
-docker compose up -d 
-```
+**Question Answering Flow**
 
-Now you can view the site by going to `localhost:3000`. You can also see all the logs of the running containers in your Docker Desktop app.
+1. The user submits a natural-language question
+2. The backend generates an embedding for the question
+3. The retrieval system identifies relevant document chunks
+4. The selected context is passed to an LLM
+5. The application returns a generated answer with relevant source references
 
-There will only be one user on the site: `admin@example.com`. If you choose a different project name, then the email domain changes.  For example, if you create your project using`project_name=fullstackexample` the user email will be `admin@fullstackexample.com`. The default password will be set to `changethis` but that can be changed. 
+## Engineering Considerations
 
-Here are all the local development URLS:
+### Performance and Scalability
 
-- Frontend -- http://localhost:3000
-- Backend -- http://localhost/api/v1/
-- Automatic Documentation via Swagger UI -- http://localhost/docs
-- Alternative Documentation via ReDoc -- http://localhost/redoc
-- Flower: Admin tool of Celery Tasks -- http://localhost:5555
-- Traefik UI to see how routes are being handled by the proxy: http://localhost:8090
+The architecture is designed to support efficient retrieval and document processing through:
 
-See [Building a generated app](./docs/getting-started.md) for examples of what these pages look like.
+- Asynchronous API operations
+- Background processing for long-running document tasks
+- Redis caching for appropriate workloads
+- Database indexing and query optimization
+- Containerized application components
 
+### Reliability
 
-## Key features
+Important reliability considerations include:
 
-This FastAPI, React, MongoDB repo will generate a complete web application stack as a foundation for your project development.
+- Error handling and structured logging
+- API request validation
+- Retry handling for temporary external-service failures
+- Monitoring of document-processing tasks
+- Automated unit and integration testing
 
-- **Docker Compose** integration and optimization for local development.
-- **Authentication** user management schemas, models, crud and apis already built, with OAuth2 JWT token support & default hashing. Offers _magic link_ authentication, with password fallback, with cookie management, including `access` and `refresh` tokens.
-- [**FastAPI**](https://github.com/tiangolo/fastapi) backend with [Inboard](https://inboard.bws.bio/) one-repo Docker images:
-  - **PyMongo** https://pymongo.readthedocs.io/en/stable/
-  - **Common CRUD** support via generic inheritance.
-  - **Standards-based**: Based on (and fully compatible with) the open standards for APIs: [OpenAPI](https://github.com/OAI/OpenAPI-Specification) and [JSON Schema](http://json-schema.org/).
-  - [**Many other features**]("https://fastapi.tiangolo.com/features/"): including automatic validation, serialization, interactive documentation, etc.
-- [**Nextjs/React**](https://nextjs.org/) frontend:
-  - **Authorization** route-based authentication, including support for detecting if a user is logged in or is a superuser.
-  - **Form validation** with [React useForm](https://react-hook-form.com/docs/useform)
-  - **State management** with [Redux](https://redux.js.org/)
-  - **CSS and templates** with [TailwindCSS](https://tailwindcss.com/), [HeroIcons](https://heroicons.com/), and [HeadlessUI](https://headlessui.com/).
-- **Celery** worker that can import and use models and code from the rest of the backend selectively.
-- **Flower** for Celery jobs monitoring.
-- Load balancing between frontend and backend with **Traefik**, so you can have both under the same domain, separated by path, but served by different containers.
-- Traefik integration, including Let's Encrypt **HTTPS** certificates automatic generation.
-- GitHub **CI** (continuous integration), including frontend and backend testing.
+### Security
 
-## How to use the template
+For production deployments, the system should include:
 
-- [Building a generated app](./docs/getting-started.md)
-- [Development and installation](./docs/development-guide.md)
-- [Deployment for production](./docs/deployment-guide.md)
-- [Authentication and magic tokens](./docs/authentication-guide.md)
-- [Websockets for interactive communication](./docs/websocket-guide.md)
+- Authentication and role-based access control
+- Document-level access restrictions
+- Secure storage of API credentials
+- Encryption in transit
+- Validation of uploaded files
+- Protection against prompt injection and unsafe document content
 
-## More details
+## Example Use Cases
 
-After using this generator, your new project (the directory created) will contain an extensive `README.md` with instructions for development, deployment, etc. You can pre-read [the project `README.md` template here too](./{{cookiecutter.project_slug}}/README.md).
+**Internal Knowledge Search**
 
-This current release is for FastAPI version 0.103 and introduces support for Pydantic 2. Since this is intended as a base stack on which you will build complex applications, there is no intention of backwards compatability between releases, and the objective is to ensure that each release has the latest long-term-support versions of the core libraries so that you can rely on your application core for as long as possible.
+Employees can ask questions about company policies, technical documentation, and operational procedures.
 
-To align with [Inboard](https://inboard.bws.bio/), Poetry has been deprecated in favour of [Hatch](https://hatch.pypa.io/latest/). This will also, hopefully, sort out some Poetry-related Docker build errors.
+**Technical Documentation Assistant**
 
+Engineering teams can locate implementation details and understand system documentation more efficiently.
+
+**Customer Support Knowledge Base**
+
+Support teams can retrieve relevant answers from product manuals, troubleshooting guides, and approved support documents.
+
+## Example Interaction
+
+**User Question:**
+
+"What is the process for requesting access to a new internal application?"
+
+**Illustrative AI Response:**
+
+"According to the access management policy, employees should submit a request through the internal service portal, specify the required application and access level, and obtain approval from their manager."
+
+**Source:** Access Management Policy — Section 3.2
+
+*This is an illustrative example, not an output captured from the running application.*
+
+## Local Development
+
+The application
 ## Help needed
 
 This project is currently experimental, so bugs or issues may occur. Please open an issue ticket against this repository to make us aware of issues and we will do our best to respond to them in a timely manner. Please leave feedback on features that would be very beneficial for developers who often leverage MongoDB in their FastAPI stack.
@@ -151,9 +161,6 @@ See notes:
 - Removed Alembic Usage
 - Introduced new cookiecutter environment variables `mongodb_uri`, and `mongo_database`
 - Introduced support for Pydantic 2
-
-[Historic changes from whythawk](https://github.com/whythawk/full-stack-fastapi-postgresql/releases)
-[Historic changes from original](https://github.com/tiangolo/full-stack-fastapi-postgresql#release-notes)
 
 ## License
 
